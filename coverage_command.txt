@@ -1,0 +1,15 @@
+###
+Running Tests
+###
+
+# Run the specified module
+Run the specified  module
+
+#Run the specified module
+py manage.py test app1.tests
+
+#Run the specified class
+python manage.py test app1.tests.models
+
+#Run the specified method
+python manage.py test app1.tests.models.TestNew 
