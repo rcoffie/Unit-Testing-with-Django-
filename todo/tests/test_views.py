@@ -31,6 +31,14 @@ class TestTodoViews(TestCase):
         confirm_response = self.client.post(reverse("create_todo"), data=data)
         self.assertRedirects(confirm_response, reverse("list"))
 
+    def test_create_todo_invalid(self):
+        data = {}
+        response = self.client.get(reverse('create_todo'))
+        res  = self.client.post(reverse("create_todo"), data=data)
+        self.assertRaises(KeyError)
+
+
+
     def test_update_todo(self):
         todo = Todo.objects.create(title="updated title")
         data = {
@@ -43,3 +51,13 @@ class TestTodoViews(TestCase):
         response = self.client.post(reverse('update_todo', args=[1]), data=data)
         self.assertRedirects(response, reverse('list'))
         self.assertEqual(response.status_code, 302)
+
+    def test_update_todo_invalid(self):
+        todo = Todo.objects.create(title="title updated")
+        data = {
+        "description":"update description",
+        "status":True
+        }
+        url = self.client.get(reverse('update_todo', args=[1]))
+        response = self.client.post(reverse("update_todo", args=[1]), data=data)
+        self.assertRaises(KeyError)
